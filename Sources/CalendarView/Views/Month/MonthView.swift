@@ -5,8 +5,6 @@
 import SwiftUI
 
 struct MonthView: View {
-
-//	@Binding var isPresented: Bool
 	
 	@ObservedObject var calendarManager: CalendarManager
 	
@@ -42,17 +40,19 @@ struct MonthView: View {
 							HStack(spacing: 0) {
 								
 								if isThisMonth(date: column) {
-									CellView(viewModel: .init(countries: []),
-											 rkDate: DateManager(
-										date: column,
-										calendarManager: self.calendarManager,
-										isDisabled: !self.isEnabled(date: column),
-										isToday: self.isToday(date: column),
-										isSelected: self.isSpecialDate(date: column),
-										isBetweenStartAndEnd: self.isBetweenStartAndEnd(date: column)))
-										.onTapGesture {
-											self.dateTapped(date: column)
-										}
+									CellView(
+										dateManager: DateManager(
+											date: column,
+											calendarManager: self.calendarManager,
+											isDisabled: !self.isEnabled(date: column),
+											isToday: self.isToday(date: column),
+											isSelected: self.isSpecialDate(date: column),
+											isBetweenStartAndEnd: self.isBetweenStartAndEnd(date: column)),
+										countries: self.getCountries(for: column)
+									)
+									.onTapGesture {
+										self.dateTapped(date: column)
+									}
 									
 								} else {
 									
@@ -108,10 +108,18 @@ struct MonthView: View {
 		return rowArray
 	}
 	
+	func getCountries(for date: Date) -> [Country] {
+		return calendarManager
+			.countriesVisited
+			.first(where: { $0.date == date })?
+			.countries ?? []
+	}
+	
 	func getMonthHeader() -> String {
 		let headerDateFormatter = DateFormatter()
 		headerDateFormatter.calendar = calendarManager.calendar
-		headerDateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "LLLL", options: 0, locale: calendarManager.calendar.locale)
+		headerDateFormatter.locale = Locale(identifier: "en_US")
+		headerDateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "LLLL", options: 0, locale: headerDateFormatter.locale)
 		
 		return headerDateFormatter.string(from: firstOfMonthForOffset())
 	}

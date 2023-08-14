@@ -20,6 +20,7 @@ class WeekdayHeaderViewModel: ObservableObject {
 
 	func getWeekdayHeaders() -> [String] {
 		let formatter = DateFormatter()
+		formatter.locale = Locale(identifier: "en_US")
 		let weekdaySymbols = formatter.veryShortWeekdaySymbols
 		return weekdaySymbols?.compactMap { $0.lowercased() } ?? []
 	}
