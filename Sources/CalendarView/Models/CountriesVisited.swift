@@ -10,13 +10,13 @@ public struct CountriesVisited: Codable {
 
 	public var date: Date
 	
-	public var countries: [Country]
+	public var countries: [String]
 	
 	// MARK: --
 
 	public init(
 		date: Date,
-		countries: [Country]
+		countries: [String]
 	) {
 		self.date = date
 		self.countries = countries
@@ -24,7 +24,7 @@ public struct CountriesVisited: Codable {
 	
 	public init (
 		date: String,
-		countries: [Country]
+		countries: [String]
 	) {
 		let convertedDate = date.toDate() ?? Date()
 		self.init(date: convertedDate, countries: countries)
@@ -43,7 +43,7 @@ public struct CountriesVisited: Codable {
 		let container: KeyedDecodingContainer<CountriesVisited.CodingKeys> = try decoder.container(keyedBy: CountriesVisited.CodingKeys.self)
 		
 		self.date = try container.decode(String.self, forKey: CountriesVisited.CodingKeys.date).toDate() ?? Date()
-		self.countries = try container.decode([Country].self, forKey: CountriesVisited.CodingKeys.countries)
+		self.countries = try container.decode([String].self, forKey: CountriesVisited.CodingKeys.countries)
 		
 	}
 	

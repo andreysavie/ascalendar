@@ -16,7 +16,7 @@ public class CalendarManager: ObservableObject {
     @Published public var startDate: Date! = nil
     @Published public var endDate: Date! = nil
 	
-	@Published public var countriesVisited: [CountriesVisited]
+	@Published public var countriesVisited: [CountriesVisited] = []
     
     @Published public var mode: Int = 0
     
@@ -27,16 +27,42 @@ public class CalendarManager: ObservableObject {
 		minimumDate: Date,
 		maximumDate: Date,
 		selectedDates: [Date] = [Date](),
-		countriesVisited: [CountriesVisited] = [],
 		mode: Int
 	) {
         self.calendar = calendar
         self.minimumDate = minimumDate
         self.maximumDate = maximumDate
         self.selectedDates = selectedDates
-		self.countriesVisited = countriesVisited
         self.mode = mode
     }
+	
+	public convenience init(year: Int? = nil) {
+		
+		var calendar = Calendar.current
+		let formatter = DateFormatter()
+		formatter.dateFormat = "yyyy"
+		var date: Date = Date()
+		
+		if #available(iOS 16, *) {
+			calendar.timeZone = .gmt
+			formatter.timeZone = .gmt
+		}
+		
+		if let year, let newDate = formatter.date(from: "\(year)") {
+			date = newDate
+		}
+
+		let components = calendar.dateComponents([.year], from: date)
+		let startOfYear = calendar.date(from: components)!
+		let endOfYear = calendar.date(byAdding: DateComponents(year: 1, day: -1), to: startOfYear)!
+
+		self.init(
+			calendar: calendar,
+			minimumDate: startOfYear,
+			maximumDate: endOfYear,
+			mode: 1
+		)
+	}
 	
 	func addDates() {
 		guard var currentDate = startDate else { return }

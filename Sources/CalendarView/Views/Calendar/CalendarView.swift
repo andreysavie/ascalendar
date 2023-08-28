@@ -8,20 +8,14 @@ public struct ASCalendarView: View {
     
 	// MARK: --
 
-    @Binding public var isPresented: Bool
-	
-	// MARK: --
-
-	@StateObject private var viewModel: CalendarViewModel
+	@ObservedObject private var viewModel: CalendarViewModel
 	
 	// MARK: --
 
 	public init(
-		isPresented: Binding<Bool>,
 		viewModel: CalendarViewModel
 	) {
-		self._isPresented = isPresented
-		self._viewModel = StateObject(wrappedValue: viewModel)
+		self._viewModel = ObservedObject(wrappedValue: viewModel)
 	}
     	
 	// MARK: --

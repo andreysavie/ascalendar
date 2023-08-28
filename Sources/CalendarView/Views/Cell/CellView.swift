@@ -12,7 +12,7 @@ struct CellView: View {
 	
 	// MARK: --
 
-	let countries: [Country]
+	let countries: [String]
 		
 	// MARK: - ViewBuilder var
 	
@@ -35,18 +35,18 @@ struct CellView: View {
 				if countries.isEmpty {
 					Spacer()
 				} else if countries.count == 1 {
-					Image(countries[0].flag)
+					Image(countries[0])
 						.resizable()
 						.frame(width: 20, height: 14)
 				} else if countries.count == 2 {
-					ForEach(countries, id: \.flag) { country in
-						Image(country.flag)
+					ForEach(countries, id: \.self) { country in
+						Image(country)
 							.resizable()
 							.frame(width: 12, height: 10)
 					}
 				} else {
-					ForEach(countries.prefix(2), id: \.flag) { country in
-						Image(country.flag)
+					ForEach(countries.prefix(2), id: \.self) { country in
+						Image(country)
 							.resizable()
 							.frame(width: 12, height: 10)
 					}

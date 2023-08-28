@@ -31,7 +31,8 @@ class MonthViewModel: ObservableObject {
 	
 	// MARK: --
 	
-	func getCountries(for date: Date) -> [Country] {
+	func getCountries(for date: Date) -> [String] {
+		
 		let date = date.truncateTime()
 		
 		let countries = calendarManager
@@ -39,7 +40,6 @@ class MonthViewModel: ObservableObject {
 			.first(where: { $0.date == date })?
 			.countries ?? []
 		
-		print("Date: \(date), countries: \(countries)")
 		return countries
 	}
 

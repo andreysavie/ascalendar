@@ -6,12 +6,12 @@ import SwiftUI
 
 struct WeekdayHeaderView: View {
 	
-	@StateObject private var viewModel: WeekdayHeaderViewModel
+	@ObservedObject private var viewModel: WeekdayHeaderViewModel
 	
 	// MARK: --
 	
 	init(viewModel: WeekdayHeaderViewModel) {
-		self._viewModel = StateObject(wrappedValue: viewModel)
+		self._viewModel = ObservedObject(wrappedValue: viewModel)
 	}
 
 	

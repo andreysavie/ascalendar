@@ -108,7 +108,7 @@ struct MonthView: View {
 		return rowArray
 	}
 	
-	func getCountries(for date: Date) -> [Country] {
+	func getCountries(for date: Date) -> [String] {
 		return calendarManager
 			.countriesVisited
 			.first(where: { $0.date == date })?
@@ -250,105 +250,3 @@ struct MonthView: View {
 //	}
 //}
 //#endif
-
-
-
-//struct MonthView: View {
-//
-//	// MARK: --
-//
-//	@StateObject private var viewModel: MonthViewModel
-//
-//	// MARK: --
-//
-//	init(viewModel: MonthViewModel) {
-//		self._viewModel = StateObject(wrappedValue: viewModel)
-//	}
-//
-//    var body: some View {
-//
-//        VStack(alignment: .trailing, spacing: 10) {
-//
-//			Text(viewModel.getMonthHeader()).foregroundColor(viewModel.calendarManager.colors.monthHeaderColor)
-//				.bold()
-//				.padding(.trailing)
-//
-//			VStack(alignment: .leading, spacing: 5) {
-//
-//				ForEach(viewModel.monthsArray, id:  \.self) { row in
-//
-//					HStack() {
-//
-//						Spacer()
-//
-//						ForEach(row, id:  \.self) { column in
-//
-//							HStack(spacing: 0) {
-//
-//                                if viewModel.isThisMonth(date: column) {
-//
-//									CellView(viewModel: .init(
-//
-//										rkDate: RKDateManager(
-//											date:  column,
-//											calendarManager: viewModel.calendarManager,
-//											isDisabled: viewModel.isEnabled(date: column),
-//											isToday: viewModel.isToday(date: column),
-//											isSelected: viewModel.isSpecialDate(date: column),
-//											isBetweenStartAndEnd: viewModel.isBetweenStartAndEnd(date: column)),
-//										countries: viewModel.getCountries(for: column)
-//									))
-//                                        .onTapGesture {
-//											print(column)
-//											viewModel.dateTapped(date: column)
-//										}
-//
-//                                } else {
-//
-//									Spacer()
-//
-//								}
-//                            }
-//                        }
-//
-//						Spacer()
-//                    }
-//                }
-//            }
-//			.frame(minWidth: 0, maxWidth: .infinity)
-//        }
-//		.background(viewModel.calendarManager.colors.monthBackColor)
-//    }
-//
-//}
-//
-//struct RKMonth_Previews : PreviewProvider {
-//    static var previews: some View {
-//
-//		let mock = MockDataService()
-//
-//		var calendarManager: calendarManager = {
-//
-//			let calendar = Calendar.current
-//			let components = calendar.dateComponents([.year], from: Date())
-//			let startOfYear = calendar.date(from: components)!
-//			let endOfYear = calendar.date(byAdding: DateComponents(year: 1, day: -1), to: startOfYear)!
-//
-//			let calendarManager = calendarManager(
-//				calendar: calendar,
-//				minimumDate: startOfYear,
-//				maximumDate: endOfYear,
-//				countriesVisited: mock.countriesVisited,
-//				mode: 2
-//			)
-//
-//			return calendarManager
-//		}()
-//
-//		MonthView(
-//			viewModel: .init(
-//				calendarManager: calendarManager,
-//				monthOffset: 0)
-//		)
-//	}
-//}
