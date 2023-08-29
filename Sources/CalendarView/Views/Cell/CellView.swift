@@ -59,7 +59,7 @@ struct CellView: View {
 				Spacer()
 			}
 			.frame(height: 15)
-			
+			  
 		}
 	}
 	
