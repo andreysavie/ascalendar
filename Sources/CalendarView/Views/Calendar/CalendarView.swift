@@ -48,23 +48,23 @@ public struct ASCalendarView: View {
     
 }
 
-//struct RKViewController_Previews : PreviewProvider {
-//	static var previews: some View {
-//
-//		let calendar = Calendar.current
-//		let components = calendar.dateComponents([.year], from: Date())
-//		let startOfYear = calendar.date(from: components)!
-//		let endOfYear = calendar.date(byAdding: DateComponents(year: 1, day: -1), to: startOfYear)!
-//		let service = MockDataService()
-//		let calendarManager = calendarManager(
-//			calendar: calendar,
-//			minimumDate: startOfYear,
-//			maximumDate: endOfYear,
-//			countriesVisited: service.countriesVisited,
-//			mode: 0)
-//
-//		VStack {
-//			CalendarView(isPresented: .constant(false), viewModel: .init(calendarManager: calendarManager(calendar: calendar, minimumDate: startOfYear, maximumDate: endOfYear, mode: 0)))
-//		}
-//	}
-//}
+struct RKViewController_Previews : PreviewProvider {
+	static var previews: some View {
+
+		let calendar = Calendar.current
+		let components = calendar.dateComponents([.year], from: Date())
+		let startOfYear = calendar.date(from: components)!
+		let endOfYear = calendar.date(byAdding: DateComponents(year: 1, day: -1), to: startOfYear)!
+		let calendarManager = CalendarManager(
+			calendar: calendar,
+			minimumDate: startOfYear,
+			maximumDate: endOfYear,
+			mode: 0
+		)
+
+		VStack {
+			ASCalendarView(viewModel: .init(calendarManager: calendarManager))
+			
+		}
+	}
+}

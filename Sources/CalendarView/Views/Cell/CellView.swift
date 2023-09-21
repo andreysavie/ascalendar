@@ -27,6 +27,7 @@ struct CellView: View {
 			
 			Text(dateManager.getText())
 				.font(.system(size: 16))
+				.offset(y: 4)
 			
 			HStack(spacing: 0) {
 				
@@ -67,7 +68,19 @@ struct CellView: View {
 	
 	var body: some View {
 		mainView
-			.background(dateManager.getBackgroundColor().opacity(0.25))
+			.background {
+				Circle()
+					.foregroundColor(dateManager.getBackgroundColor())
+					.padding(.top, 2)
+			}
 	}
 	
+}
+
+
+struct CellView_Preview: PreviewProvider {
+	static var previews: some View {
+			CellView(dateManager: .init(date: Date(), calendarManager: .init(calendar: .current, minimumDate: Date(), maximumDate: Date(), mode: 1), isDisabled: false, isToday: true, isSelected: false, isBetweenStartAndEnd: true), countries: [])
+			.frame(width: 50)
+	}
 }
