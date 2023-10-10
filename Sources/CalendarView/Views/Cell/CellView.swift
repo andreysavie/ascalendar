@@ -5,6 +5,15 @@
 import SwiftUI
 
 struct CellView: View {
+	
+	func flagpediaURLAPI(id: String?) -> URL? {
+		guard let id else { return nil }
+		let fpurl = "https://flagcdn.com/w160/\(id).jpg"
+		guard let result = URL(string: fpurl) else {
+			return nil
+		}
+		return result
+	}
     	
 	// MARK: --
 
@@ -13,6 +22,21 @@ struct CellView: View {
 	// MARK: --
 
 	let countries: [String]
+	
+	@ViewBuilder func getFlagImage(
+		id: String?,
+		width: CGFloat,
+		height: CGFloat
+	) -> some View {
+		
+		AsyncImage(url: flagpediaURLAPI(id: id)) { image in
+			image
+				.image?
+				.resizable()
+				.frame(width: width, height: height)
+		}
+
+	}
 		
 	// MARK: - ViewBuilder var
 	
@@ -35,21 +59,19 @@ struct CellView: View {
 				
 				if countries.isEmpty {
 					Spacer()
+					
 				} else if countries.count == 1 {
-					Image(countries[0])
-						.resizable()
-						.frame(width: 20, height: 14)
+					getFlagImage(id: countries[0], width: 20, height: 14)
+
 				} else if countries.count == 2 {
 					ForEach(countries, id: \.self) { country in
-						Image(country)
-							.resizable()
-							.frame(width: 12, height: 10)
+						getFlagImage(id: country, width: 12, height: 10)
+
 					}
 				} else {
 					ForEach(countries.prefix(2), id: \.self) { country in
-						Image(country)
-							.resizable()
-							.frame(width: 12, height: 10)
+						getFlagImage(id: country, width: 12, height: 10)
+
 					}
 					Circle()
 						.frame(width: 4, height: 4)

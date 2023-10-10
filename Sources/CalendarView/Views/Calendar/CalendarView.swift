@@ -30,17 +30,25 @@ public struct ASCalendarView: View {
 			
 			Divider()
 			
-			ScrollView(.vertical, showsIndicators: false) {
+			ScrollViewReader { scroll in
 				
-				VStack {
+				ScrollView(.vertical, showsIndicators: false) {
 					
-					ForEach(0..<viewModel.numberOfMonths(), id: \.self) { index in
+					VStack {
 						
-						MonthView(calendarManager: viewModel.calendarManager, monthOffset: index)
+						ForEach(0..<viewModel.numberOfMonths(), id: \.self) { index in
+							
+							MonthView(calendarManager: viewModel.calendarManager, monthOffset: index)
+								.id(index)
+						}
+						.onAppear {
+							let month = Date().monthNumber()
+							scroll.scrollTo(month - 1)
+						}
+						
+						Divider()
+						
 					}
-					
-					Divider()
-					
 				}
 			}
 		}

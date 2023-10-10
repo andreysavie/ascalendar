@@ -43,6 +43,15 @@ extension Date {
 		return formatter.string(from: self)
 	}
 	
+	func monthNumber() -> Int {
+		let calendar = Calendar.current
+		let components = calendar.dateComponents([.month], from: self)
+		if let month = components.month {
+			return month
+		} else {
+			return 0 // Если не удалось получить номер месяца
+		}
+	}
 
 	
 }
