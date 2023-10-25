@@ -39,6 +39,7 @@ public class CalendarManager: ObservableObject {
 	public convenience init(year: Int? = nil) {
 		
 		var calendar = Calendar.current
+		calendar.locale = .init(identifier: "ru_RU")
 		let formatter = DateFormatter()
 		formatter.dateFormat = "yyyy"
 		var date: Date = Date()

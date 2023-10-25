@@ -243,10 +243,26 @@ struct MonthView: View {
 	}
 }
 
-//#if DEBUG
-//struct RKMonth_Previews : PreviewProvider {
-//	static var previews: some View {
-//		RKMonth(isPresented: .constant(false),calendarManager: calendarManager(calendar: Calendar.current, minimumDate: Date(), maximumDate: Date().addingTimeInterval(60*60*24*365), mode: 0), monthOffset: 0)
-//	}
-//}
-//#endif
+#if DEBUG
+struct RKMonth_Previews : PreviewProvider {
+	
+	static var previews: some View {
+		
+		let calendar: Calendar = {
+			var calendar = Calendar.current
+			calendar.locale = .init(identifier: "ru_RU")
+			return calendar
+		}()
+
+		MonthView(
+			calendarManager: .init(
+				calendar: calendar,
+				minimumDate: Date(),
+				maximumDate: Date().addingTimeInterval(60*60*24*365),
+				mode: 0
+			),
+			monthOffset: 0
+		)
+	}
+}
+#endif

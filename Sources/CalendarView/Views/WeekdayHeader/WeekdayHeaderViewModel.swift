@@ -19,10 +19,11 @@ class WeekdayHeaderViewModel: ObservableObject {
 	// MARK: --
 
 	func getWeekdayHeaders() -> [String] {
-		let formatter = DateFormatter()
-		formatter.locale = Locale(identifier: "en_US")
-		let weekdaySymbols = formatter.veryShortWeekdaySymbols
-		return weekdaySymbols?.compactMap { $0.lowercased() } ?? []
+		var calendar = Calendar(identifier: .gregorian)
+		calendar.locale = Locale(identifier: "en_US")
+		let weekdaySymbols = calendar.veryShortWeekdaySymbols
+		let reorderedSymbols = Array(weekdaySymbols.dropFirst()) + [weekdaySymbols.first!]
+		return reorderedSymbols.map { $0.lowercased() }
 	}
 
 }
